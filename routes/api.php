@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+/*
 Route::get('Users/{parameter}', function($parameter){
   // return Users::find($first_name);
   // return Users::where('first_name', $first_name)->get();
@@ -21,7 +21,6 @@ Route::get('Users/{parameter}', function($parameter){
   ->orWhere('first_name', $parameter)
   ->orWhere('last_name', $parameter)
   ->get();
-  // return Users::all();
 });
 
 Route::get('Users', function(){
@@ -42,4 +41,18 @@ Route::delete('Users/{id}', function(Users $id){
     'id'  => $id->id,
     'code'=> 200,
   );
+});
+*/
+Route::group(['prefix'  => 'v1'], function(){
+  Route::resource('Users', 'UsersController', [
+    'except'   => ['destroy', 'create']
+  ]);
+
+  Route::post('/Users/create', [
+    'uses'  => 'UsersController@create'
+  ]);
+
+  // Route::get('/users/data', [
+  //   'uses'  => 'UsersController@show'
+  // ]);
 });

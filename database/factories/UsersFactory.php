@@ -7,12 +7,12 @@ use Faker\Generator as Faker;
 
 $factory->define(Users::class, function (Faker $faker) {
     return [
-      'id'    => $faker->sentence,
-      'first_name'  => $faker->sentence,
+      'id'         => $faker->sentence,
+      'first_name' => $faker->sentence,
       'last_name'  => $faker->sentence,
-      'address'  => $faker->paragraph,
-      'birthday'  => $faker->date,
-      'phone'  => $faker->sentence,
-      'email'  => $faker->sentence,
+      'address'    => $faker->paragraph,
+      'birthday'   => $faker->date,
+      'phone'      => $faker->sentence,
+      'email'      => $faker->sentence,
     ];
 });
