@@ -1,5 +1,6 @@
 <?php
 
+use App\Users;
 use Illuminate\Http\Request;
 
 /*
@@ -13,6 +14,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('Users/{parameter}', function($parameter){
+  // return Users::find($first_name);
+  // return Users::where('first_name', $first_name)->get();
+  return Users::where('id', $parameter)
+  ->orWhere('first_name', $parameter)
+  ->orWhere('last_name', $parameter)
+  ->get();
+  // return Users::all();
+});
+
+Route::get('Users', function(){
+  return Users::all();
+});
+
+Route::post('Users', function(){
+  $parameter = array();
+  $parameter = request()->all();
+  $parameter['id'] = (int)Users::all()->last()->id + 1;
+  Users::create($parameter);
+  return $parameter;
+});
+
+Route::delete('Users/{id}', function(Users $id){
+  $id->delete();
+  return array(
+    'id'  => $id->id,
+    'code'=> 200,
+  );
 });

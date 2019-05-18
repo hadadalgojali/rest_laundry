@@ -13,10 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('users')) {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->increments('id');
+            $table->string('first_name')->length(50);
+            $table->string('last_name')->length(255);
+            $table->text('address');
+            $table->date('birthday');
+            $table->string('phone')->length(15);
+            $table->string('email')->length(255);
         });
+      }
     }
 
     /**
