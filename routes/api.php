@@ -45,7 +45,7 @@ Route::delete('Users/{id}', function(Users $id){
 */
 Route::group(['prefix'  => 'v1'], function(){
   Route::resource('Users', 'UsersController', [
-    'except'   => ['destroy', 'create']
+    'except'   => ['edit', 'create']
   ]);
 
   Route::post('/Users/create', [
