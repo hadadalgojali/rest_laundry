@@ -16,6 +16,9 @@ class AuthKey
      */
     public function handle($request, Closure $next)
     {
+      if (strlen($request->header('APP_KEY')) > 5) {
+        return response()->json(['code' => 401, 'message' => 'APP KEY Failed formatted !', ], 401);
+      }
       $result = Api_token::where('secret_key',$request->header('APP_KEY'))
       ->where('api_token', md5($request->header('API_TOKEN')))
       ->count();

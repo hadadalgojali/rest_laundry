@@ -11,12 +11,13 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-  // 
+  //
   // Route::middleware('auth:api')->get('/user', function(Request $request) {
   //     return $request->user();
   // });
 
 Route::group(['prefix'  => 'v1'], function(){
+  // ================ API USERS
   Route::resource('Users', 'UsersController', [
     'except'   => ['edit', 'create']
   ]);
@@ -25,11 +26,21 @@ Route::group(['prefix'  => 'v1'], function(){
     'uses'  => 'UsersController@create'
   ]);
 
+  // ================ API AUTH
   Route::post('/Auth/signin', [
     'uses'  => 'AuthController@login'
   ]);
 
   Route::get('/Auth/signout/{id}', [
     'uses'  => 'AuthController@logout'
+  ]);
+
+  // ================ API CLASS
+  Route::resource('Class', 'ClassController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Class/create', [
+    'uses'  => 'ClassController@create'
   ]);
 });

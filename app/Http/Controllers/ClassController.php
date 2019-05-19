@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes;
 use Validator;
-use App\Users;
-use App\Users_account;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class ClassController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,20 +17,16 @@ class UsersController extends Controller
     {
         //
     }
-        /**
-         * Store a newly created resource in create.
-         *
-         * @param  \Illuminate\Http\Request  $request
-         * @return \Illuminate\Http\Response
-         */
-    public function create()
-    {
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(){
         //
         $validator = Validator::make(request()->all(), [
-            'phone'      => 'max:15',
-            'first_name' => 'required',
-            'email'      => 'email',
-            'birthday'   => 'date',
+            'class'      => 'required|max:25',
         ]);
         if ($validator->fails()) {
             return response()->json(array(
@@ -44,15 +39,10 @@ class UsersController extends Controller
         try{
           $parameter       = array();
           $parameter       = request()->all();
-          $parameter['id'] = (int)Users::all()->last()->id + 1;
+          $parameter['id'] = (int)Classes::all()->last()->id + 1;
           $response['code']     = 401;
-          if (Users_account::where('username', request()->email)->first()) {
-            $result   = false;
-            $response['message']  = "Duplicate Username!";
-          }else{
-            $result   = Users::create($parameter);
-            $response['message']  = "Was not Saving, Try Again!";
-          }
+          $response['message']  = "Was not Saving, Try Again!";
+          $result   = Classes::create($parameter);
 
           if ($result){
               $response['code']     = 200;
@@ -62,7 +52,7 @@ class UsersController extends Controller
         }catch(\Exception $exception){
           dd($exception);
           $response['code']    = 401;
-          $response['message'] = 'No Customer to de!' . $exception->getCode();
+          $response['message'] = 'Error Proced!' . $exception->getCode();
         }
         return response()->json($response, $response['code']);
     }
@@ -84,13 +74,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($parameter = null)
-    {
-        //
+    public function show($parameter = null){
         $response = array();
-        $data = Users::where('id', $parameter)
-        ->orWhere('first_name', $parameter)
-        ->orWhere('last_name', $parameter)
+        $data = Classes::where('id', $parameter)
+        ->orWhere('class', $parameter)
         ->get();
 
         if (count($data)  > 0) {
@@ -100,8 +87,7 @@ class UsersController extends Controller
           $response['code']     = 401;
           $response['response'] = array();
         }
-
-        return $response;
+        return response()->json($response, $response['code']);
     }
 
     /**
@@ -122,16 +108,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id = null)
-    {
+    public function update(Request $request, $id){
       $response  = array();
         //
         // $validator = Validator::make(request()->all(), [
         $validator = Validator::make($request->input(), [
-            'phone'      => 'max:15',
-            'first_name' => 'required',
-            'email'      => 'email',
-            'birthday'   => 'date',
+            'class'      => 'required|max:25',
         ]);
 
         if ($validator->fails()) {
@@ -141,15 +123,10 @@ class UsersController extends Controller
             ), 401);
         }
         try{
-          $parameter = Users::find($id);
+          $parameter = Classes::find($id);
           if ($parameter){
-            $parameter->first_name = $request->input('first_name');
-            $parameter->last_name  = $request->input('last_name');
-            $parameter->birthday   = $request->input('birthday');
-            $parameter->address    = $request->input('address');
-            $parameter->phone      = $request->input('phone');
-            $parameter->email      = $request->input('email');
-            $result    = $parameter->update();
+            $parameter->class = $request->input('class');
+            $result           = $parameter->update();
           }else{
             $result = false;
           }
@@ -180,29 +157,29 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
-        $response  = array();
-        try{
-          $parameter = Users::find($id);
-          if ($parameter){
-            $result    = $parameter->delete();
-          }else{
-            $result = false;
-          }
+            $response  = array();
+            try{
+              $parameter = Classes::find($id);
+              if ($parameter){
+                $result    = $parameter->delete();
+              }else{
+                $result = false;
+              }
 
-          if ($result){
-              $response['code']     = 200;
-              $response['message']  = "Successfully Deleted!";
-              $response['response'] = $parameter;
-          }else{
-              $response['code']     = 401;
-              $response['message']  = "Was not Deleted, Try Again!";
-              $response['response'] = $parameter;
-          }
-        }catch(\Exception $exception){
-          dd($exception);
-          $response['code']    = 401;
-          $response['message'] = 'No Customer to de!' . $exception->getCode();
-        }
+              if ($result){
+                  $response['code']     = 200;
+                  $response['message']  = "Successfully Deleted!";
+                  $response['response'] = $parameter;
+              }else{
+                  $response['code']     = 401;
+                  $response['message']  = "Was not Deleted, Try Again!";
+                  $response['response'] = $parameter;
+              }
+            }catch(\Exception $exception){
+              dd($exception);
+              $response['code']    = 401;
+              $response['message'] = 'No Customer to de!' . $exception->getCode();
+            }
         return response()->json($response, $response['code']);
     }
 }

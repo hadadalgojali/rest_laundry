@@ -24,6 +24,10 @@ Route::group(['prefix'  => 'pages'], function(){
       return view('pages/users/index');
   });
 
+  Route::get('/class', function () {
+      return view('pages/class/index', ['title'=>"Class",'class'=>"class"]);
+  });
+
   Route::get('/api_key', function () {
       return view('pages/api_key/index');
   });
