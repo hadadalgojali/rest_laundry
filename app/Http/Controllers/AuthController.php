@@ -29,7 +29,7 @@ class AuthController extends Controller
         // $data->loggin_status = 1;
         // $data->loggin_time   = date('Y-m-d H:i:s');
         $data = Users_account::where('username', $request->input('username'))
-        ->where('password', md5($request->input('password')))->update([
+        ->where('password', bcrypt($request->input('password')))->update([
           'loggin_status' => 1,
           'loggin_time' => date('Y-m-d H:i:s'),
         ]);

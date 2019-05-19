@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Users;
+use App\Users_account;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -44,14 +45,18 @@ class UsersController extends Controller
           $parameter       = array();
           $parameter       = request()->all();
           $parameter['id'] = (int)Users::all()->last()->id + 1;
-          $result    = Users::create($parameter);
+          $response['code']     = 201;
+          if (Users_account::where('username', request()->email)->first()) {
+            $result   = false;
+            $response['message']  = "Duplicate Username!";
+          }else{
+            $result   = Users::create($parameter);
+            $response['message']  = "Was not Saving, Try Again!";
+          }
+
           if ($result){
               $response['code']     = 200;
               $response['message']  = "Successfully Saving!";
-              $response['response'] = $parameter;
-          }else{
-              $response['code']     = 201;
-              $response['message']  = "Was not Saving, Try Again!";
               $response['response'] = $parameter;
           }
         }catch(\Exception $exception){
