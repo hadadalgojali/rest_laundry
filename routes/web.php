@@ -12,5 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::group(['prefix'  => 'pages'], function(){
+  Route::get('/master', function () {
+      return view('pages/master-data/index');
+  });
+
+  Route::get('/users', function () {
+      return view('pages/users/index');
+  });
+
+  Route::get('/api_key', function () {
+      return view('pages/api_key/index');
+  });
 });

@@ -1,0 +1,33 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+a{
+    text-decoration : none;
+    color: rgba(230, 230, 230, 0.9);
+}
+
+#sidebar-rest{
+  width   : 260px;
+  position: fixed;
+  height  : 100%;
+  left    : -260px;
+  transition: all 400ms linear;
+}
+
+#sidebar-rest.active{
+  left    : 0px;
+}
+
+#sidebar-rest ul li{
+  color: rgba(230, 230, 230, 0.9);
+  list-style: none;
+  padding: 15px 10px;
+  border-bottom: solid 1px rgba(100, 100, 100, 0.3);
+}
+
+#sidebar-rest .toggle-btn{
+  position: absolute;
+  left: 280px;
+  top: 10px;
+}
