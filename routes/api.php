@@ -43,4 +43,13 @@ Route::group(['prefix'  => 'v1'], function(){
   Route::post('/Class/create', [
     'uses'  => 'ClassController@create'
   ]);
+
+  // ================ API ITEMS
+  Route::resource('Items', 'ItemController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Items/create', [
+    'uses'  => 'ItemController@create'
+  ]);
 });

@@ -28,6 +28,11 @@ Route::group(['prefix'  => 'pages'], function(){
       return view('pages/class/index', ['title'=>"Class",'class'=>"class"]);
   });
 
+  Route::get('/items', function () {
+      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      return view('pages/items/index', ['title'=>"Items",'class'=>"items", 'url'=> $url]);
+  });
+
   Route::get('/api_key', function () {
       return view('pages/api_key/index');
   });
