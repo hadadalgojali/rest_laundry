@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Item;
+use App\Outlet;
 use Validator;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class OutletController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +23,12 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //
         $validator = Validator::make(request()->all(), [
-            'code'      => 'required|max:10',
-            'item'      => 'required|max:255',
+            'code'      => 'required|max:5',
+            'name'      => 'required|max:255',
+            'phone'     => 'numeric',
         ]);
         if ($validator->fails()) {
             return response()->json(array(
@@ -41,10 +41,10 @@ class ItemController extends Controller
         try{
           $parameter       = array();
           $parameter       = request()->all();
-          $parameter['id'] = (int)Item::all()->last()->id + 1;
+          $parameter['id'] = (int)Outlet::all()->last()->id + 1;
           $response['code']     = 401;
           $response['message']  = "Was not Saving, Try Again!";
-          $result   = Item::create($parameter);
+          $result   = Outlet::create($parameter);
 
           if ($result){
               $response['code']     = 200;
@@ -52,7 +52,7 @@ class ItemController extends Controller
               $response['response'] = $parameter;
           }
         }catch(\Exception $exception){
-          // dd($exception);
+          dd($exception);
           $response['code']    = 401;
           $response['message'] = 'Error Proced!' . $exception->getCode();
         }
@@ -78,9 +78,9 @@ class ItemController extends Controller
      */
     public function show($parameter = null){
         $response = array();
-        $data = Item::where('id', $parameter)
+        $data = Outlet::where('id', $parameter)
         ->orWhere('code', $parameter)
-        ->orWhere('item', $parameter)
+        ->orWhere('name', $parameter)
         ->get();
 
         if (count($data)  > 0) {
@@ -116,8 +116,9 @@ class ItemController extends Controller
         //
         // $validator = Validator::make(request()->all(), [
         $validator = Validator::make($request->input(), [
-            'code'      => 'required|max:10',
-            'item'      => 'required|max:255',
+            'code'      => 'required|max:5',
+            'name'      => 'required|max:255',
+            'phone'     => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -127,11 +128,13 @@ class ItemController extends Controller
             ), 401);
         }
         try{
-          $parameter = Item::find($id);
+          $parameter = Outlet::find($id);
           if ($parameter){
-            $parameter->code = $request->input('code');
-            $parameter->item = $request->input('item');
-            $result           = $parameter->update();
+            $parameter->code    = $request->input('code');
+            $parameter->name    = $request->input('name');
+            $parameter->address = $request->input('address');
+            $parameter->phone   = $request->input('phone');
+            $result             = $parameter->update();
           }else{
             $result = false;
           }
@@ -160,11 +163,12 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id){
         //
             $response  = array();
             try{
-              $parameter = Item::find($id);
+              $parameter = Outlet::find($id);
               if ($parameter){
                 $result    = $parameter->delete();
               }else{

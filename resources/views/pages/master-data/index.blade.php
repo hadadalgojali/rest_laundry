@@ -27,6 +27,12 @@
         'link'      => '/pages/outlet',
         'icon'      => 'fa fa-building',
       ),
+      4  => array(
+        'title'     => 'Data Customer',
+        'deskripsi' => 'Daftar Customer yang telah berlangganan pada setiap outlet',
+        'link'      => '/pages/customer',
+        'icon'      => 'fa fa-users',
+      ),
     );
   ?>
   <h4 class="mt-4">Manage master data</h4>

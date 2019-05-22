@@ -52,4 +52,13 @@ Route::group(['prefix'  => 'v1'], function(){
   Route::post('/Items/create', [
     'uses'  => 'ItemController@create'
   ]);
+
+  // ================ API OUTLET
+  Route::resource('Outlet', 'OutletController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Outlet/create', [
+    'uses'  => 'OutletController@create'
+  ]);
 });
