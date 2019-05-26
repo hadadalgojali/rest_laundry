@@ -80,4 +80,13 @@ Route::group(['prefix'  => 'v1'], function(){
     'uses'  => 'ProductController@create'
   ]);
 
+  // ================ API UNIT
+  Route::resource('Unit', 'UnitController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Unit/create', [
+    'uses'  => 'UnitController@create'
+  ]);
+
 });
