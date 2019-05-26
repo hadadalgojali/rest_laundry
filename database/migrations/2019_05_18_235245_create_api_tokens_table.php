@@ -18,7 +18,8 @@ class CreateApiTokensTable extends Migration
             $table->integer('id');
             $table->integer('secret_key');
             $table->string('api_token');
-            $table->timestamps();
+            $table->datetime('created_at');
+            $table->datetime('updated_at');
         });
       }
     }

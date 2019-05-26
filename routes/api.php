@@ -61,4 +61,23 @@ Route::group(['prefix'  => 'v1'], function(){
   Route::post('/Outlet/create', [
     'uses'  => 'OutletController@create'
   ]);
+
+  // ================ API CUSTOMER
+  Route::resource('Customer', 'CustomerController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Customer/create', [
+    'uses'  => 'CustomerController@create'
+  ]);
+
+  // ================ API PRODUCT
+  Route::resource('Product', 'ProductController', [
+    'except'   => ['edit', 'create']
+  ]);
+
+  Route::post('/Product/create', [
+    'uses'  => 'ProductController@create'
+  ]);
+
 });

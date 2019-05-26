@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Outlet;
+use App\Product;
+use App\Classes;
 use Validator;
 use Illuminate\Http\Request;
 
-class OutletController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,28 +24,40 @@ class OutletController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+
+    public function create()
+    {
         //
+        $response  = array();
         $validator = Validator::make(request()->all(), [
-            'code'      => 'required|max:5',
-            'name'      => 'required|max:255',
-            'phone'     => 'numeric',
+            'code'     => 'required|max:5',
+            'id_class' => 'required'
         ]);
+
         if ($validator->fails()) {
             return response()->json(array(
               'code'      => 401,
               'message'   => $validator->messages(),
             ), 401);
+            die;
         }
 
-        $response  = array();
+        $parameter = Classes::find(request()->id_class);
+        if (!$parameter) {
+            return response()->json(array(
+              'code'      => 401,
+              'message'   => 'Class not defined !',
+            ), 401);
+            die;
+        }
+
         try{
-          $parameter       = array();
-          $parameter       = request()->all();
-          $parameter['id'] = (int)Outlet::all()->last()->id + 1;
-          $response['code']     = 401;
-          $response['message']  = "Was not Saving, Try Again!";
-          $result   = Outlet::create($parameter);
+          $parameter           = array();
+          $parameter           = request()->all();
+          $parameter['id']     = (int)Product::all()->last()->id + 1;
+          $response['code']    = 401;
+          $response['message'] = "Was not Saving, Try Again!";
+          $result              = Product::create($parameter);
 
           if ($result){
               $response['code']     = 200;
@@ -79,12 +92,11 @@ class OutletController extends Controller
     public function show($parameter = null){
         $response = array();
         if (is_numeric($parameter)) {
-          $data = Outlet::where('id', $parameter)
+          $data = Product::where('id', $parameter)
           ->get();
         }else{
-          $data = Outlet::where('code', 'LIKE', "%{$parameter}%")
+          $data = Product::where('code', 'LIKE', "%{$parameter}%")
           ->orWhere('name', 'LIKE', "%{$parameter}%")
-          ->orWhere('address', 'LIKE', "%{$parameter}%")
           ->get();
         }
 
@@ -119,11 +131,9 @@ class OutletController extends Controller
     public function update(Request $request, $id){
       $response  = array();
         //
-        // $validator = Validator::make(request()->all(), [
         $validator = Validator::make($request->input(), [
-            'code'      => 'required|max:5',
-            'name'      => 'required|max:255',
-            'phone'     => 'numeric',
+            'code'     => 'required|max:5',
+            'id_class' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -132,14 +142,23 @@ class OutletController extends Controller
               'message'   => $validator->messages(),
             ), 401);
         }
+
+        $parameter = Product::find($request->id_class);
+        if (!$parameter) {
+            return response()->json(array(
+              'code'      => 401,
+              'message'   => 'Class not defined !',
+            ), 401);
+            die;
+        }
+
         try{
-          $parameter = Outlet::find($id);
+          $parameter = Product::find($id);
           if ($parameter){
-            $parameter->code    = $request->input('code');
-            $parameter->name    = $request->input('name');
-            $parameter->address = $request->input('address');
-            $parameter->phone   = $request->input('phone');
-            $result             = $parameter->update();
+            $parameter->id_class = $request->input('id_class');
+            $parameter->code     = $request->input('code');
+            $parameter->name     = $request->input('name');
+            $result              = $parameter->update();
           }else{
             $result = false;
           }
@@ -159,8 +178,8 @@ class OutletController extends Controller
           $response['message'] = 'Data Not Found!' . $exception->getCode();
         }
         return response()->json($response, $response['code']);
+        //
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -168,32 +187,32 @@ class OutletController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy($id){
+    public function destroy($id)
+    {
         //
-            $response  = array();
-            try{
-              $parameter = Outlet::find($id);
-              if ($parameter){
-                $result    = $parameter->delete();
-              }else{
-                $result = false;
-              }
+        $response  = array();
+        try{
+          $parameter = Product::find($id);
+          if ($parameter){
+            $result    = $parameter->delete();
+          }else{
+            $result = false;
+          }
 
-              if ($result){
-                  $response['code']     = 200;
-                  $response['message']  = "Successfully Deleted!";
-                  $response['response'] = $parameter;
-              }else{
-                  $response['code']     = 401;
-                  $response['message']  = "Was not Deleted, Try Again!";
-                  $response['response'] = $parameter;
-              }
-            }catch(\Exception $exception){
-              dd($exception);
-              $response['code']    = 401;
-              $response['message'] = 'No Customer to de!' . $exception->getCode();
-            }
+          if ($result){
+              $response['code']     = 200;
+              $response['message']  = "Successfully Deleted!";
+              $response['response'] = $parameter;
+          }else{
+              $response['code']     = 401;
+              $response['message']  = "Was not Deleted, Try Again!";
+              $response['response'] = $parameter;
+          }
+        }catch(\Exception $exception){
+          dd($exception);
+          $response['code']    = 401;
+          $response['message'] = 'No Customer to de!' . $exception->getCode();
+        }
         return response()->json($response, $response['code']);
     }
 }

@@ -20,6 +20,8 @@ class CreateOutletsTable extends Migration
             $table->string('name', 255);
             $table->string('address');
             $table->string('phone', 15);
+            $table->datetime('created_at');
+            $table->datetime('updated_at');
         });
       }
     }

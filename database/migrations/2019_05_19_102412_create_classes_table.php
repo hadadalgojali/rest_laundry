@@ -17,6 +17,8 @@ class CreateClassesTable extends Migration
         Schema::create('class', function (Blueprint $table) {
             $table->int('id');
             $table->string('class');
+            $table->datetime('created_at');
+            $table->datetime('updated_at');
         });
       }
     }

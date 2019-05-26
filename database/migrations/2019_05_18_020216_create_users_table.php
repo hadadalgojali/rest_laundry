@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->date('birthday');
             $table->string('phone')->length(15);
             $table->string('email')->length(255);
+            $table->datetime('created_at');
+            $table->datetime('updated_at');
         });
       }
     }

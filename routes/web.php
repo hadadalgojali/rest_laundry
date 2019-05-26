@@ -38,6 +38,16 @@ Route::group(['prefix'  => 'pages'], function(){
       return view('pages/outlet/index', ['title'=>"Outlet",'class'=>"outlet", 'url'=> $url]);
   });
 
+  Route::get('/customer', function () {
+      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      return view('pages/customer/index', ['title'=>"Customer",'class'=>"customer", 'url'=> $url]);
+  });
+
+  Route::get('/product', function () {
+      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      return view('pages/product/index', ['title'=>"Product",'class'=>"product", 'url'=> $url]);
+  });
+
   Route::get('/api_key', function () {
       return view('pages/api_key/index');
   });

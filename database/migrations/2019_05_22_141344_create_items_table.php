@@ -19,6 +19,8 @@ class CreateItemsTable extends Migration
             $table->string('code', 10);
             $table->string('item', 255);
             $table->smallInteger('active', 1);
+            $table->datetime('created_at');
+            $table->datetime('updated_at');
         });
       }
     }

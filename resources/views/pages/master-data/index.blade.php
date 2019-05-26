@@ -3,35 +3,47 @@
   <?php
     $data = array(
       0  => array(
-        'title'     => 'Data User',
+        'title'     => 'User',
         'deskripsi' => 'Data pengguna yang dapat mengakses sistem Laundry',
         'link'      => '/pages/users',
         'icon'      => 'fa fa-users',
       ),
       1  => array(
-        'title'     => 'Data Items',
+        'title'     => 'Items',
         'deskripsi' => 'Data item digunakan oleh pengguna untuk mendefiniskan apa saja item yang digunakan selama bertransaksi',
         'link'      => '/pages/items',
         'icon'      => 'fa fa-list',
       ),
       2  => array(
-        'title'     => 'Data Class',
+        'title'     => 'Class',
         'deskripsi' => 'Data yang dipergunakan untuk mengklasifikasikan produk customer',
         'link'      => '/pages/class',
         'icon'      => 'fa fa-th-large',
       ),
       3  => array(
-        'title'     => 'Data Outlet',
+        'title'     => 'Outlet',
         'deskripsi' => 'Daftar outlet laundry yang di gunakan oleh pengguna, memungkinkan pengguna dapat mengakses outlet
         secara bercabang',
         'link'      => '/pages/outlet',
         'icon'      => 'fa fa-building',
       ),
       4  => array(
-        'title'     => 'Data Customer',
+        'title'     => 'Customer',
         'deskripsi' => 'Daftar Customer yang telah berlangganan pada setiap outlet',
         'link'      => '/pages/customer',
         'icon'      => 'fa fa-users',
+      ),
+      5  => array(
+        'title'     => 'Product',
+        'deskripsi' => 'Daftar produk yang terdaftar di dalam sistem laundry dari berbagai outlet yang ada',
+        'link'      => '/pages/product',
+        'icon'      => 'fa fa-dropbox',
+      ),
+      6  => array(
+        'title'     => 'Unit',
+        'deskripsi' => 'Setup untuk satuan produk dalam satu transaksi',
+        'link'      => '/pages/unit',
+        'icon'      => 'fa fa-cubes',
       ),
     );
   ?>
