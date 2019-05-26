@@ -21,12 +21,12 @@
       <th width="50%">Description</th>
     </tr>
     <tr>
-      <td>API KEY</td>
+      <td>API_KEY</td>
       <td>: 123xx</td>
       <td>Setiap customer memiliki kunci yang unik</td>
     </tr>
     <tr>
-      <td>APP Token</td>
+      <td>APP_TOKEN</td>
       <td>: xxxxxxxxxxxxxxxxxx</td>
       <td>Berfungsi untuk mendeskripsikan aplikasi apa yang aktif untuk kunci tersebut</td>
     </tr>

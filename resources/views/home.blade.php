@@ -1,4 +1,4 @@
-@extends('layouts/master', ['title' => 'Home'])
+@extends('layouts/master', ['title' => 'Rest - Dashboard'])
 @section('content')
   <h4 class="mt-4">Mengenai App</h4>
   Rest Client ini diperuntukan untuk media akses pada semua perangkat Aplikasi Laundry Goyang Pensil,
