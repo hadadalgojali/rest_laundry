@@ -21,30 +21,32 @@ Route::group(['prefix'  => 'pages'], function(){
   });
 
   Route::get('/users', function () {
-      return view('pages/users/index');
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
+      return view('pages/users/index', ['title'=>"Users",'class'=>"user", 'url'=> $url]);
   });
 
   Route::get('/class', function () {
-      return view('pages/class/index', ['title'=>"Class",'class'=>"class"]);
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
+      return view('pages/class/index', ['title'=>"Class",'class'=>"class", 'url'=> $url]);
   });
 
   Route::get('/items', function () {
-      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
       return view('pages/items/index', ['title'=>"Items",'class'=>"items", 'url'=> $url]);
   });
 
   Route::get('/outlet', function () {
-      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
       return view('pages/outlet/index', ['title'=>"Outlet",'class'=>"outlet", 'url'=> $url]);
   });
 
   Route::get('/customer', function () {
-      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
       return view('pages/customer/index', ['title'=>"Customer",'class'=>"customer", 'url'=> $url]);
   });
 
   Route::get('/product', function () {
-      $url = "rest_laundry.goyangpensil.com/api/v1/";
+      $url = "ws.laundry.goyangpensil.com/api/v1/";
       return view('pages/product/index', ['title'=>"Product",'class'=>"product", 'url'=> $url]);
   });
 

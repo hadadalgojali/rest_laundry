@@ -1,7 +1,7 @@
   <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
       <td width="20%"><b>URL</b></td>
-      <td width="80%">: rest_laundry.goyangpensil.com/api/v1/Users/create</td>
+      <td width="80%">: {{ $url }}{{ $title }}/create</td>
     </tr>
     <tr>
       <td><b>Content Type</b></td>
